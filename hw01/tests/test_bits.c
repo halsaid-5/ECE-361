@@ -36,6 +36,13 @@ int main(void)
     check("get_field pos 31",
           get_field(0x80000000, 31, 1) == 1);
 
+    /* get_field invalid arguments */
+    check("get_field invalid width",
+          get_field(0x12345678, 0, 0) == 0);
+
+    check("get_field invalid range",
+          get_field(0x12345678, 31, 2) == 0);
+
     /* set_field tests */
     check("set_field width 1",
           set_field(0, 0, 1, 1) == 1);
@@ -48,6 +55,13 @@ int main(void)
 
     check("set_field value too wide",
           set_field(0, 4, 3, 0xF) == 0x70);
+
+    /* set_field invalid arguments */
+    check("set_field invalid width",
+          set_field(0x12345678, 0, 0, 1) == 0x12345678);
+
+    check("set_field invalid range",
+          set_field(0x12345678, 31, 2, 1) == 0x12345678);
 
     /* sign_extend tests */
     check("sign_extend -8",
@@ -81,6 +95,11 @@ int main(void)
     status_t s3 = status_unpack(0xF800);
 
     check("status negative setpoint", s3.setpoint == -8);
+
+    /* invalid mode */
+    status_t s4 = status_unpack(0x0050);
+
+    check("status invalid mode", s4.mode == 5);
 
     printf("\n%d passed, %d failed\n", passed, failed);
 
