@@ -1,0 +1,4 @@
+*.o
+readings
+test_stats
+.DS_Store
