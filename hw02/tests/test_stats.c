@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include "../stats.h"
 
@@ -24,7 +23,29 @@ int main(void) {
                                        &start_index);
 
     if (best != 2 || start_index != 1) {
-        printf("FAIL: stats_longest_run_above\n");
+        printf("FAIL: longest run\n");
+        return 1;
+    }
+
+    /* Test when no temperature is above threshold */
+    float low[] = {20.0f, 25.0f, 30.0f};
+    best = stats_longest_run_above(low, 3, 30.0f,
+                                   &start_index);
+
+    if (best != 0 || start_index != -1) {
+        printf("FAIL: no run\n");
+        return 1;
+    }
+
+    /* Test recursive maximum with 10000 values */
+    float large[10000];
+
+    for (int i = 0; i < 10000; i++) {
+        large[i] = (float)i;
+    }
+
+    if (stats_max(large, 10000) != 9999.0f) {
+        printf("FAIL: large recursive max\n");
         return 1;
     }
 
