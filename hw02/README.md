@@ -29,3 +29,17 @@ To run the regression tests:
 
 ## Results
 The program passed the statistics tests and all three regression tests: normal, edge, and empty.
+
+
+## Module Diagram
+
+main.c
+  |
+  |-- reading.c / reading.h
+  |     Reads sensor data from the input file.
+  |
+  |-- stats.c / stats.h
+  |     Calculates min, max, mean, and longest run.
+  |
+  |-- histogram.c / histogram.h
+        Prints the temperature histogram.
