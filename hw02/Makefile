@@ -1,4 +1,3 @@
-
 CC = gcc
 CFLAGS = -std=c11 -Wall -Wextra
 
@@ -23,9 +22,7 @@ test_stats: tests/test_stats.c stats.c stats.h
 
 test: readings test_stats
 	./test_stats
-	./readings < data/normal.txt | diff - expected/normal.txt
-	./readings < data/edge.txt | diff - expected/edge.txt
-	./readings < data/empty.txt | diff - expected/empty.txt
+	sh regress.sh
 
 clean:
 	rm -f readings test_stats *.o
