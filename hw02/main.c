@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
         char *end;
         threshold = strtof(argv[1], &end);
 
-        if (*end != '\0') {
+        if (end == argv[1] || *end != '\0') {
             fprintf(stderr,
                     "error: threshold '%s' is not a number\n",
                     argv[1]);
