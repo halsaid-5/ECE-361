@@ -5,3 +5,5 @@ test_stats
 *.dSYM/
 demo_iom361_r4
 test_iom361_r4project/parking_gate
+project/gate
+project/iom361_r4/test_iom361_r4
