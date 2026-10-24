@@ -1,0 +1,10 @@
+# Normal Operation Scenario
+start 1791273600
+
+# tick  temp  rh  switches
+0       23.5  75  0x0
+1       23.5  75  0x1
+2       23.5  75  0x0
+6       23.5  75  0x2
+8       23.5  75  0x0
+16      23.5  75  0x0

@@ -39,3 +39,70 @@ The system responds to these events:
 - The gate waits 3 ticks after the car leaves before closing.
 - If a car is detected while closing, the gate stops for 2 ticks and then opens again.
 - If the temperature is 0.5 C or lower and humidity is 90% or higher, the gate refuses a paid ticket.
+
+## 5. State Transition Table
+
+| Current State | Event | Next State | Action |
+|---|---|---|---|
+| DOWN | TICKET_PAID | RAISING | Start motor up |
+| RAISING | RAISE_DONE | UP | Stop motor up |
+| UP | CAR_DETECTED | UP | Keep gate open |
+| UP | CAR_LEFT | UP | Start 3-tick wait |
+| UP | WAIT_DONE | LOWERING | Start motor down |
+| LOWERING | CAR_DETECTED | BLOCKED | Stop motor |
+| BLOCKED | BLOCK_DONE | RAISING | Start motor up |
+| LOWERING | LOWER_DONE | DOWN | Stop motor |
+
+If freezing rain is detected (temperature <= 0.5 C
+and humidity >= 90%), the gate refuses a paid ticket
+while DOWN.
+
+For events not listed in the table, the gate stays
+in its current state.
+
+## 6. State Machine Diagram
+
+```text
+DOWN
+  |
+  | TICKET_PAID
+  v
+RAISING
+  |
+  | RAISE_DONE
+  v
+ UP <------------------- RAISING
+  |                        ^
+  | WAIT_DONE              |
+  v                        |
+LOWERING                   |
+  |                        |
+  | CAR_DETECTED           |
+  v                        |
+BLOCKED -------------------+
+       BLOCK_DONE
+
+LOWERING
+  |
+  | LOWER_DONE
+  v
+DOWN
+```
+
+## 7. Status Word
+
+The status word is a 32-bit unsigned integer.
+
+| Field | Bit Position | Width |
+|---|---|---|
+| State | 0 | 3 |
+| MOTOR_UP | 3 | 1 |
+| MOTOR_DOWN | 4 | 1 |
+| GO | 5 | 1 |
+| Car present | 6 | 1 |
+
+Unused bits are set to 0.
+
+
+
+
