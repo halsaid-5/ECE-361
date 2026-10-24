@@ -1,6 +1,6 @@
-
 #include <stdio.h>
 #include "tally.h"
+#include <string.h>
 
 static int passed = 0;
 static int failed = 0;
@@ -34,6 +34,24 @@ int main(void)
     check("Count Sara", tally_count(t, "Sara") == 1);
     check("Unknown name", tally_count(t, "Omar") == 0);
     check("Total names", tally_size(t) == 2);
+    FILE *out = tmpfile();
+
+if (out != NULL) {
+    tally_print(t, out);
+    rewind(out);
+
+    char line1[50];
+    char line2[50];
+
+    fgets(line1, sizeof(line1), out);
+    fgets(line2, sizeof(line2), out);
+
+    check("Alphabetical order",
+          strcmp(line1, "Ali 2\n") == 0 &&
+          strcmp(line2, "Sara 1\n") == 0);
+
+    fclose(out);
+}
     check("NULL add", tally_add(NULL, "Ali") == -1);
 check("NULL name", tally_add(t, NULL) == -1);
 check("NULL count", tally_count(NULL, "Ali") == 0);
@@ -54,6 +72,8 @@ if (full != NULL) {
 
     check("Full tally size", tally_size(full) == 16);
     check("Reject 17th name", tally_add(full, "Extra") == -1);
+    check("Count existing name when full",
+      tally_add(full, "Name0") == 2);
 
     tally_destroy(full);
 }
@@ -70,8 +90,13 @@ check("Create 4 tallies",
       a != NULL && b != NULL && c != NULL && d != NULL);
 
 check("Reject 5th tally", e == NULL);
-
 tally_destroy(a);
+
+tally_t *new_tally = tally_create();
+
+check("Create after destroy", new_tally != NULL);
+
+tally_destroy(new_tally);
 tally_destroy(b);
 tally_destroy(c);
 tally_destroy(d);
