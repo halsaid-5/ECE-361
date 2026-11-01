@@ -1,4 +1,3 @@
-
 CC = gcc
 CFLAGS = -std=c11 -Wall -Wextra
 
@@ -8,7 +7,7 @@ OBJ = main.o fsm.o sensor.o store.o aux.o report.o iom361_r4.o bits.o
 all: gate
 
 gate: $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o gate
+	$(CC) $(CFLAGS) $(OBJ) -o gate -lm
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
