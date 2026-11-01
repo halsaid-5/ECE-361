@@ -1,0 +1,35 @@
+2026-10-06 23:59:40 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-06 23:59:41 state=RAISING temp=20.0 rh=70.0 leds=0x1 status=0x00000009
+2026-10-06 23:59:42 state=RAISING temp=20.0 rh=70.0 leds=0x1 status=0x00000009
+2026-10-06 23:59:43 state=RAISING temp=20.0 rh=70.0 leds=0x1 status=0x00000009
+2026-10-06 23:59:44 state=RAISING temp=20.0 rh=70.0 leds=0x1 status=0x00000009
+2026-10-06 23:59:45 state=UP temp=20.0 rh=70.0 leds=0x4 status=0x00000022
+2026-10-06 23:59:46 state=UP temp=20.0 rh=70.0 leds=0x4 status=0x00000062
+2026-10-06 23:59:47 state=UP temp=20.0 rh=70.0 leds=0x4 status=0x00000062
+2026-10-06 23:59:48 state=UP temp=20.0 rh=70.0 leds=0x4 status=0x00000022
+2026-10-06 23:59:49 state=UP temp=20.0 rh=70.0 leds=0x4 status=0x00000022
+2026-10-06 23:59:50 state=UP temp=20.0 rh=70.0 leds=0x4 status=0x00000022
+2026-10-06 23:59:51 state=LOWERING temp=20.0 rh=70.0 leds=0x2 status=0x00000013
+2026-10-06 23:59:52 state=LOWERING temp=20.0 rh=70.0 leds=0x2 status=0x00000013
+2026-10-06 23:59:53 state=LOWERING temp=20.0 rh=70.0 leds=0x2 status=0x00000013
+2026-10-06 23:59:54 state=LOWERING temp=20.0 rh=70.0 leds=0x2 status=0x00000013
+2026-10-06 23:59:55 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-06 23:59:56 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-06 23:59:57 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-06 23:59:58 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-06 23:59:59 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:00 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:01 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:02 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:03 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:04 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:05 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:06 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:07 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:08 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:09 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+2026-10-07 00:00:10 state=DOWN temp=20.0 rh=70.0 leds=0x0 status=0x00000000
+Last events (newest first):
+tick 8: CAR_LEFT
+tick 6: CAR_DETECTED
+tick 1: TICKET_PAID

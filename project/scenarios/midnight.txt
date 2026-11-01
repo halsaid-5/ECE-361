@@ -1,0 +1,9 @@
+# midnight scenario
+start 1791331180
+# tick temp rh switches
+0 20.0 70.0 0x0
+1 20.0 70.0 0x1
+2 20.0 70.0 0x0
+6 20.0 70.0 0x2
+8 20.0 70.0 0x0
+30 20.0 70.0 0x0

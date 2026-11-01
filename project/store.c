@@ -1,113 +1,19 @@
 #include "store.h"
 #include <stdlib.h>
 #include <math.h>
-
-// Store records in a sorted array.
-struct store {
-    record_t *records;
-    size_t count;
-    size_t capacity;
-};
-
-// Group temperatures into 0.5 C intervals.
-static int temp_key(float temp)
-{
-    return (int)floorf(temp * 2.0f);
-}
-
-// Compare two records by temperature key.
-int record_compare(const record_t *a, const record_t *b)
-{
-    int key_a = temp_key(a->reading.temp_c);
-    int key_b = temp_key(b->reading.temp_c);
-
-    if (key_a < key_b) return -1;
-    if (key_a > key_b) return 1;
-    return 0;
-}
-
-// Create an empty store.
-store_t *store_create(void)
-{
-    return calloc(1, sizeof(store_t));
-}
-
-// Insert a record in sorted order.
-int store_insert(store_t *store, record_t record)
-{
-    if (store == NULL) return -1;
-
-    if (store->count == store->capacity) {
-        size_t new_capacity = store->capacity == 0 ? 8 : store->capacity * 2;
-
-        record_t *new_records = realloc(
-            store->records, new_capacity * sizeof(record_t));
-
-        if (new_records == NULL) return -1;
-
-        store->records = new_records;
-        store->capacity = new_capacity;
-    }
-
-    size_t i = store->count;
-
-    while (i > 0 &&
-           record_compare(&record, &store->records[i - 1]) < 0) {
-        store->records[i] = store->records[i - 1];
-        i--;
-    }
-
-    store->records[i] = record;
-    store->count++;
-
-    return 0;
-}
-
-// Find a record using its temperature key.
-const record_t *store_find(const store_t *store, float temp)
-{
-    if (store == NULL) return NULL;
-
-    int key = temp_key(temp);
-
-    for (size_t i = 0; i < store->count; i++) {
-        if (temp_key(store->records[i].reading.temp_c) == key) {
-            return &store->records[i];
-        }
-    }
-
-    return NULL;
-}
-
-// Return the number of records.
-size_t store_count(const store_t *store)
-{
-    return store == NULL ? 0 : store->count;
-}
-
-// Temporary height for the array version.
-size_t store_height(const store_t *store)
-{
-    return store == NULL ? 0 : store->count;
-}
-
-// Visit records in sorted order.
-void store_walk(const store_t *store,
-                void (*visit)(const record_t *, void *),
-                void *context)
-{
-    if (store == NULL || visit == NULL) return;
-
-    for (size_t i = 0; i < store->count; i++) {
-        visit(&store->records[i], context);
-    }
-}
-
-// Free allocated memory.
-void store_destroy(store_t *store)
-{
-    if (store == NULL) return;
-
-    free(store->records);
-    free(store);
-}
+typedef struct node {int key;record_t record;struct node *left,*right,*same;} node_t;
+struct store {node_t *root;size_t count;};
+/* Rounding to nearest 0.5: 21.2 -> 21.0; 21.4 -> 21.5.
+   This follows nearest-step rounding, not truncation. */
+static int key_of(float t){return (int)lroundf(t*2.0f);}
+int record_compare(const record_t *a,const record_t *b){int x=key_of(a->reading.temp_c),y=key_of(b->reading.temp_c);return (x>y)-(x<y);}
+store_t *store_create(void){return calloc(1,sizeof(store_t));}
+int store_insert(store_t *s,record_t record){if(!s)return -1;int key=key_of(record.reading.temp_c);node_t **link=&s->root;while(*link){if(key<(*link)->key)link=&(*link)->left;else if(key>(*link)->key)link=&(*link)->right;else {link=&(*link)->same;while(*link)link=&(*link)->same;break;}}node_t *n=calloc(1,sizeof(*n));if(!n)return -1;n->key=key;n->record=record;*link=n;s->count++;return 0;}
+const record_t *store_find(const store_t *s,float temp){if(!s)return NULL;int key=key_of(temp);node_t *n=s->root;while(n){if(key==n->key)return &n->record;n=key<n->key?n->left:n->right;}return NULL;}
+static void walk(node_t *n,record_visit_fn fn,void *ctx){if(!n)return;walk(n->left,fn,ctx);for(node_t *p=n;p;p=p->same)fn(&p->record,ctx);walk(n->right,fn,ctx);}
+void store_walk(const store_t *s,record_visit_fn fn,void *ctx){if(s&&fn)walk(s->root,fn,ctx);}
+size_t store_count(const store_t *s){return s?s->count:0;}
+static size_t height(node_t *n){if(!n)return 0;size_t a=height(n->left),b=height(n->right);return 1+(a>b?a:b);}
+size_t store_height(const store_t *s){return s?height(s->root):0;}
+static void free_nodes(node_t *n){if(!n)return;free_nodes(n->left);free_nodes(n->right);node_t *p=n;while(p){node_t *next=p->same;free(p);p=next;}}
+void store_destroy(store_t *s){if(s){free_nodes(s->root);free(s);}}
