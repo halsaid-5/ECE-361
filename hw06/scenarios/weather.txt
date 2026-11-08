@@ -1,0 +1,7 @@
+# temperature and multiple switches
+start 1791273600
+0 91.0 75 0x0
+1 91.0 75 0x4
+3 0.5 90 0xC
+4 0.5 90 0x8
+6 23.5 60 0x0
